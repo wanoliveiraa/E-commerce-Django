@@ -12,9 +12,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+PROJECT_ROOT=os.path.dirname(os.path.abspath(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-dqswobq-4#^(w$i_01qi@bf$r+hocpaedi$qahnc1t=(&%f2)2"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -119,7 +122,22 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+
+db_from_env=dj_database_url.config(conn_max_age=500)
+DATABASES["default"].update(db_from_env)
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+SECURE_PROXY_SLL_HEADER = ("HTTP_X_FOEWARDED_PHOTO","https")
+
+ALLOWED_HOSTS = ["*"]
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT,"staticfiles")
+
+try:
+    from .local_settings import *
+except ImportError:
+        pass
+
