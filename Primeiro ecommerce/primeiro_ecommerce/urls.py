@@ -24,4 +24,5 @@ urlpatterns = [
     path("contato/",contact,name="contact"),
     path('produtos/', include(('catalog.urls',"catalog"), namespace='catalog')),
     path("produto/",product,name="product"),  
+  
 ]
